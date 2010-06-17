@@ -9,7 +9,7 @@
             <strong><%= k %></strong>
           </td>
       
-          <td class='payload'><%= v %></td>
+          <td class='payload'><%= json(v) rescue v %></td>
         </tr>
       <% end %>
     </table>

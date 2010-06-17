@@ -38,18 +38,21 @@ module PostBin
       redirect "/#{bin.id.to_s(36)}"
     end
     
-    get '/:url' do
+    get 'b/:url' do
       @bin = Bin.first(:url => params[:url])
       erb :show
     end
     
-    post '/:url' do
+    post 'b/:url' do
       @bin = Bin.first(:url => params[:url])
       params.delete("url")
       @bin.items.create(:params => params.to_json)
 
       "OK"
     end
-      
+    
+    def json(v)
+      JSON.pretty_generate(JSON.parse(v), { :object_nl => "<br>"})
+    end
   end
 end
