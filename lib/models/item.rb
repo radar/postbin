@@ -1,7 +1,7 @@
 class Item
   include DataMapper::Resource
   property :id, Serial
-  property :params, String
+  property :params, Text
   
   belongs_to :bin
   
