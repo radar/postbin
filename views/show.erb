@@ -1,5 +1,5 @@
 <h2>Postbin #<%= @bin.url %></h2>
-<% for item in @bin.items %>
+<% for item in @bin.items.reverse %>
   <p>
     <div align='left'>#<%= item.id.to_s(36) %></div>
     <table align='left' width='100%'>
