@@ -14,7 +14,7 @@ module PostBin
   
   Dir[PostBin.current_path + "models/*.rb"].each { |f| require f }
   
-  DataMapper.finalize
+  DataMapper.finalize if DataMapper.respond_to?(:finalize)
   DataMapper.auto_upgrade!
   
   class App < Sinatra::Base
