@@ -44,7 +44,7 @@ module PostBin
     end
     
     post %r{/(\w+)} do
-      @bin = Bin.first(:url => params[:url])
+      @bin = Bin.first(:url => params[:captures].first)
       params.delete("url")
       p params
       @bin.items.create(:params => params.to_json)
@@ -53,7 +53,7 @@ module PostBin
     end
     
     def json
-      JSON.pretty_generate(JSON.parse(v), { :object_nl => "<br>" })
+      JSON.parse(v).to_json(JSON::State.new(:object_nl => "<br>"))
     end
       
   end
