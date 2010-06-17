@@ -39,6 +39,10 @@ module PostBin
       erb :about
     end
     
+    get '/love' do
+      erb :love
+    end
+    
     post '/bins' do
       bin = Bin.create!
       bin.url = bin.id.to_s(36)
