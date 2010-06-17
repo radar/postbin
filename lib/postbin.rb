@@ -45,8 +45,8 @@ module PostBin
     
     post '/bins/:url' do
       @bin = Bin.first(:url => params[:url])
-      p params
       @bin.items.create(:params => params.to_json)
+      @bin.save!
       "OK"
     end
       
