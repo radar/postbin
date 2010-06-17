@@ -35,25 +35,21 @@ module PostBin
       bin = Bin.create!
       bin.url = bin.id.to_s
       bin.save
-      redirect "/#{bin.id.to_s(36)}"
+      redirect bin.id.to_s(36)
     end
     
-    get 'b/:url' do
-      @bin = Bin.first(:url => params[:url])
+    get %r{/(\w+)} do
+      @bin = Bin.first(:url => params[:captures].first)
       erb :show
     end
     
-    post 'b/:url' do
+    post %r{/(\w+)} do
       @bin = Bin.first(:url => params[:url])
       params.delete("url")
-      p params
       @bin.items.create(:params => params.to_json)
 
       "OK"
     end
-    
-    def json(v)
-      JSON.pretty_generate(JSON.parse(v), { :object_nl => "<br>"} )
-    end
+      
   end
 end
