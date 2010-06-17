@@ -46,9 +46,14 @@ module PostBin
     post %r{/(\w+)} do
       @bin = Bin.first(:url => params[:url])
       params.delete("url")
+      p params
       @bin.items.create(:params => params.to_json)
 
       "OK"
+    end
+    
+    def json
+      JSON.pretty_generate(JSON.parse(v), { :object_nl => "<br>" })
     end
       
   end
