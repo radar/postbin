@@ -9,3 +9,7 @@ body {
 .payload {
   font: 12pt "Inconsolata", monospace;
 }
+
+td {
+  padding-right: 10px;
+}

@@ -5,6 +5,12 @@ require File.join(File.dirname(__FILE__), '..', '..', 'lib/postbin.rb')
 require 'capybara'
 require 'capybara/cucumber'
 require 'spec'
+require 'rack/test'
+
+def app
+  PostBin::App  
+end
+World(Rack::Test::Methods)
 
 PostBin::App.set(:environment, :test)
 
