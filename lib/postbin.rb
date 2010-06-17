@@ -33,7 +33,7 @@ module PostBin
     
     post '/bins' do
       bin = Bin.create!
-      bin.url = bin.id.to_s
+      bin.url = bin.id.to_s(36)
       bin.save
       redirect bin.id.to_s(36)
     end
