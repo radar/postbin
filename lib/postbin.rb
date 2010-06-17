@@ -31,6 +31,10 @@ module PostBin
       erb :index
     end
     
+    get '/bins' do
+      erb :index
+    end
+    
     get '/about' do
       erb :about
     end
