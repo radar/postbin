@@ -46,7 +46,6 @@ module PostBin
     post %r{/(\w+)} do
       @bin = Bin.first(:url => params[:captures].first)
       params.delete("url")
-      p params
       @bin.items.create(:params => params.to_json)
 
       "OK"
