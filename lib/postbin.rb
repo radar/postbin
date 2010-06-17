@@ -52,7 +52,7 @@ module PostBin
       "OK"
     end
     
-    def json
+    def json(v)
       JSON.parse(v).to_json(JSON::State.new(:object_nl => "<br>"))
     end
       
