@@ -52,7 +52,7 @@ module PostBin
     end
     
     def json(v)
-      JSON.parse(v).to_json(JSON::State.new(:object_nl => "<br>"))
+      JSON.parse(v).to_json(JSON::State.new(:object_nl => "<br>", :indent => "&nbsp;&nbsp;", :space => "&nbsp;", :array_nl => "<br>"))
     end
       
   end
