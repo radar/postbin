@@ -1,4 +1,5 @@
 <h2>Postbin #<%= @bin.url %></h2>
+<small>Use this link: http://postbin.heroku.com/<%= @bin.url %></small>
 <% for item in @bin.items.reverse %>
   <p>
     <div align='left'>#<%= item.id.to_s(36) %></div>
