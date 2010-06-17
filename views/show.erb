@@ -1,14 +1,18 @@
 <h2>Postbin #<%= @bin.url %></h2>
 <% for item in @bin.items %>
-  <table align='left'>
-    <% item.parsed_params.each do |k, v| %>
-      <tr>
-        <td valign='top'>
-          <strong><%= k %></strong>
-        </td>
+  <p>
+    <div align='left'>#<%= item.id.to_s(36) %></div>
+    <table align='left' width='100%'>
+      <% item.parsed_params.each do |k, v| %>
+        <tr>
+          <td valign='top' width='10%'>
+            <strong><%= k %></strong>
+          </td>
       
-        <td class='payload'><%= v %></td>
-      </tr>
-    <% end %>
-  </table>
+          <td class='payload'><%= v %></td>
+        </tr>
+      <% end %>
+    </table>
+  </p>
+  <br><br>
 <% end %>
