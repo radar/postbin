@@ -1,0 +1,11 @@
+body {
+  font: 12pt "Myriad Pro";
+}
+
+#content {
+  width: 50%;
+}
+
+.payload {
+  font: 12pt "Inconsolata", monospace;
+}
