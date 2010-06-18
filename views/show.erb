@@ -1,19 +1,16 @@
 <h2>Postbin #<%= @bin.url %></h2>
-<small>Use this link: http://postbin.heroku.com/<%= @bin.url %></small>
+<p>All POST requests to this URL are logged for you to see here, sorted newest to oldest.</p>
 <% for item in @bin.items.reverse %>
-  <p>
-    <div align='left'>#<%= item.id.to_s(36) %></div>
-    <table align='left' width='100%'>
-      <% item.parsed_params.each do |k, v| %>
-        <tr>
-          <td valign='top' width='10%'>
-            <strong><%= k %></strong>
-          </td>
-      
-          <td class='payload'><%= json(v) rescue v %></td>
-        </tr>
-      <% end %>
-    </table>
-  </p>
+  <div align='left'>#<%= item.id.to_s(36) %></div>
+  <table width='100%'>
+    <% item.parsed_params.each do |k, v| %>
+      <tr>
+        <td valign='top' width='10%'>
+          <strong><%= k %></strong>
+        </td>
+        <td class='payload'><%= json(v) rescue v %></td>
+      </tr>
+    <% end %>
+  </table>
   <br><br>
 <% end %>

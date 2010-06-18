@@ -1,14 +1,17 @@
-<!DOCTYPE html>
 <html>
   <head>
-    <link rel='stylesheet' href='/style.css'>
+    <title>PostBin - Debug web hooks</title>
+    <link href="/style.css" type="text/css" rel="stylesheet" />
   </head>
-    <body>
-    <div align='center'>
-      <div id='content'>
-        <%= yield %>
+  <body>
+    <div id="wrapper">
+      <div id="header">
+        <h1>PostBin</h1>
       </div>
-      <small><a href='/about'>what the?</a> | <a href='/love'>love</a></small>
+      <div id="content">
+        <%= yield %>
+        <small><a href='/'>home</a> | <a href='/about'>what the?</a> | <a href='/love'>love</a></small>
+      </div>
     </div>
   </body>
 </html>
