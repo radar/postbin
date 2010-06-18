@@ -8,7 +8,7 @@
         <td valign='top' width='10%'>
           <strong><%= k %></strong>
         </td>
-        <td class='payload'><%= json(v) rescue v %></td>
+        <td class='payload'><pre><%= json(v) rescue v %></pre></td>
       </tr>
     <% end %>
   </table>
