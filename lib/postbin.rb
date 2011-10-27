@@ -1,7 +1,11 @@
 require 'pathname'
+require 'digest/sha1'
 require 'rubygems'
+require 'bundler'
+Bundler.setup
 require 'sinatra/base'
-require 'datamapper'
+require 'data_mapper'
+require 'dm-sqlite-adapter'
 require 'dm-migrations'
 require 'json'
 
@@ -19,12 +23,8 @@ module PostBin
   
   class App < Sinatra::Base
     configure do
-      set :raise_errors, Proc.new { test? }
-      set :show_exceptions, Proc.new { development? }
-      set :dump_errors, true
       set :logging, Proc.new { !test? }
       set :static, true
-      set :public, "#{PostBin.current_path}/../public"
     end
     
     get '/' do
@@ -44,25 +44,32 @@ module PostBin
     end
     
     post '/bins' do
-      bin = Bin.create!
-      bin.url = bin.id.to_s(36)
-      bin.save
-      redirect bin.id.to_s(36)
+      bin = Bin.new
+      # TOOD: Figure out why a before :create callback won't work in the Bin model
+      # Fucking Datamapper, man.
+      url = bin.random_url
+      # Pick another if it already exists, keep trying
+      until Bin.first(:url => url).nil?
+        url = bin.random_url
+      end
+      bin.url = url
+      bin.save!
+      redirect bin.url
     end
-    
-    get %r{/(\w+)} do
-      @bin = Bin.first(:url => params[:captures].first)
+
+    get '/:id' do
+      @bin = Bin.first(:url => params[:id])
       erb :show
     end
-    
-    post %r{/(\w+)} do
+
+    post '/:id' do
       @bin = Bin.first(:url => params[:captures].first)
       params.delete("captures")
       @bin.items.create(:params => params.to_json)
 
       "OK"
     end
-    
+
     def json(v)
       JSON.parse(v).to_json(JSON::State.new(:object_nl => "<br>", :indent => "&nbsp;&nbsp;", :space => "&nbsp;"))
     end
