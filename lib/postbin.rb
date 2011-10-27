@@ -63,9 +63,9 @@ module PostBin
       erb :show
     end
 
-    post '/:id' do
-      @bin = Bin.first(:url => params[:captures].first)
-      params.delete("captures")
+    post '/:bin_id' do
+      @bin = Bin.first(:url => params[:id].first)
+      params.delete(:bin_id)
       @bin.items.create(:params => params.to_json)
 
       "OK"
