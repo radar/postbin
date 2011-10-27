@@ -6,6 +6,7 @@ Bundler.setup
 require 'sinatra/base'
 require 'data_mapper'
 require 'dm-sqlite-adapter'
+require 'dm-postgres-adapter'
 require 'dm-migrations'
 require 'json'
 
