@@ -9,6 +9,7 @@ require 'dm-sqlite-adapter'
 require 'dm-postgres-adapter'
 require 'dm-migrations'
 require 'json'
+require 'erubis'
 
 module PostBin
   def self.current_path
@@ -60,7 +61,7 @@ module PostBin
 
     get '/:id' do
       @bin = Bin.first(:url => params[:id])
-      erb :show
+      erubis :show
     end
 
     post '/:bin_id' do
