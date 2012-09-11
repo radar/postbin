@@ -3,21 +3,25 @@
 <% for item in @bin.items.reverse %>
   <div align='left'>#<%= item.id.to_s(36) %></div>
   <table width='100%'>
-    <% item.parsed_params.each do |k, v| %>
-      <tr>
-        <td valign='top' width='10%'>
-          <strong><%== k %></strong>
-        </td>
-        <td class='payload'>
-          <pre>
-            <% begin %>
-              <%== json(v) %>
-            <% rescue %>
-              <%== v %>
-            <% end %>
-          </pre>
-        </td>
-      </tr>
+    <% if item.parsed_params.is_a?(String) %>
+      <%= item.parsed_params %>
+    <% else %> 
+      <% item.parsed_params.each do |k, v| %>
+        <tr>
+          <td valign='top' width='10%'>
+            <strong><%== k %></strong>
+          </td>
+          <td class='payload'>
+            <pre>
+              <% begin %>
+                <%== json(v) %>
+              <% rescue %>
+                <%== v %>
+              <% end %>
+            </pre>
+          </td>
+        </tr>
+      <% end %>
     <% end %>
   </table>
   <br><br>
