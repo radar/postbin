@@ -6,7 +6,11 @@ class Item
   belongs_to :bin
   
   def parsed_params
-    JSON.parse(params)
+    begin
+      JSON.parse(params)
+    rescue JSON::ParserError
+      params
+    end
   end
   
 end
