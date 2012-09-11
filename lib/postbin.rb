@@ -60,7 +60,7 @@ module PostBin
 
     get '/:id' do
       @bin = Bin.first(:url => params[:id])
-      erubis :show
+      erb :show
     end
 
     post '/:bin_id' do
