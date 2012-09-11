@@ -1,80 +1,44 @@
 require 'pathname'
-require 'digest/sha1'
 require 'rubygems'
 require 'bundler'
 Bundler.setup
 require 'sinatra/base'
-require 'data_mapper'
-require 'dm-sqlite-adapter'
-require 'dm-postgres-adapter'
-require 'dm-migrations'
-require 'json'
-require 'erubis'
 
 module PostBin
-  def self.current_path
-    Pathname.new(File.expand_path(File.dirname(__FILE__)))
-  end
-  
-  DataMapper.setup(:default, ENV['DATABASE_URL'] || "sqlite:///#{PostBin.current_path + 'my.db'}")  
-  
-  Dir[PostBin.current_path + "models/*.rb"].each { |f| require f }
-  
-  DataMapper.finalize if DataMapper.respond_to?(:finalize)
-  DataMapper.auto_upgrade!
-  
   class App < Sinatra::Base
     configure do
       set :logging, Proc.new { !test? }
       set :static, true
     end
-    
+
     get '/' do
-      erb :index
+      redirect 'http://postbin.ryanbigg.com', 301
     end
-    
+
     get '/bins' do
+      redirect 'http://postbin.ryanbigg.com/bins', 301
       erb :index
     end
-    
+
     get '/about' do
+      redirect 'http://postbin.ryanbigg.com/about', 301
       erb :about
     end
-    
+
     get '/love' do
+      redirect 'http://postbin.ryanbigg.com/love', 301
       erb :love
-    end
-    
-    post '/bins' do
-      bin = Bin.new
-      # TOOD: Figure out why a before :create callback won't work in the Bin model
-      # Fucking Datamapper, man.
-      url = bin.random_url
-      # Pick another if it already exists, keep trying
-      until Bin.first(:url => url).nil?
-        url = bin.random_url
-      end
-      bin.url = url
-      bin.save!
-      redirect bin.url
     end
 
     get '/:id' do
-      @bin = Bin.first(:url => params[:id])
-      erubis :show
+      redirect "http://postbin.ryanbigg.com/#{params[:id]}", 301
     end
 
     post '/:bin_id' do
-      @bin = Bin.first(:url => params[:bin_id])
-      params.delete("bin_id")
-      @bin.items.create(:params => params.to_json)
+      status 403
+%Q{Heroku has imposed a database limit of 10,000 rows. Please use http://postbin.ryanbigg.com now.
 
-      "OK"
+Postbin has slightly more (try adding a couple of zeroes) than 10,000 rows.\n}
     end
-
-    def json(v)
-      JSON.parse(v).to_json(JSON::State.new(:object_nl => "<br>", :indent => "&nbsp;&nbsp;", :space => "&nbsp;"))
-    end
-      
   end
 end
