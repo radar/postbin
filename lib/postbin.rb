@@ -27,6 +27,11 @@ module PostBin
       set :logging, Proc.new { !test? }
       set :static, true
     end
+
+    helpers do
+      include Rack::Utils
+      alias_method :h, :escape_html
+    end
     
     get '/' do
       erb :index

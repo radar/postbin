@@ -11,14 +11,14 @@
       <% item.parsed_params.each do |k, v| %>
         <tr>
           <td valign='top' width='10%'>
-            <strong><%== k %></strong>
+            <strong><%= h(k) %></strong>
           </td>
           <td class='payload'>
             <pre>
               <% begin %>
-                <%== json(v) %>
+                <%= json(v) %>
               <% rescue %>
-                <%== v %>
+                <%= v %>
               <% end %>
             </pre>
           </td>
