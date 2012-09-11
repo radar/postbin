@@ -3,7 +3,7 @@
 <% for item in @bin.items.reverse %>
   <div align='left'>
     #<%= item.id.to_s(36) %><br>
-    <%= item.parsed_params.is_a?(String) ? "string" : "json" %>
+    <%= item.parsed_params.is_a?(String) ? "string" : "json/hash" %>
   </div>
   <table width='100%'>
     <% if item.parsed_params.is_a?(String) %>
