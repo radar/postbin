@@ -5,7 +5,6 @@ require 'bundler'
 Bundler.setup
 require 'sinatra/base'
 require 'data_mapper'
-require 'dm-sqlite-adapter'
 require 'dm-postgres-adapter'
 require 'dm-migrations'
 require 'json'
@@ -16,7 +15,7 @@ module PostBin
     Pathname.new(File.expand_path(File.dirname(__FILE__)))
   end
   
-  DataMapper.setup(:default, ENV['DATABASE_URL'] || "sqlite:///#{PostBin.current_path + 'my.db'}")  
+  DataMapper.setup(:default, 'postgres://ryan@localhost/postbin')
   
   Dir[PostBin.current_path + "models/*.rb"].each { |f| require f }
   
