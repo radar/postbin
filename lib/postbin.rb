@@ -48,13 +48,19 @@ module PostBin
     get '/love' do
       erb :love
     end
-
-    patch '/bins' do
-      create_new_bin!
-    end
-
+    
     post '/bins' do
-      create_new_bin!
+      bin = Bin.new
+      # TOOD: Figure out why a before :create callback won't work in the Bin model
+      # Fucking Datamapper, man.
+      url = bin.random_url
+      # Pick another if it already exists, keep trying
+      until Bin.first(:url => url).nil?
+        url = bin.random_url
+      end
+      bin.url = url
+      bin.save!
+      redirect bin.url
     end
 
     get '/:id' do
@@ -73,19 +79,6 @@ module PostBin
     def json(v)
       JSON.parse(v).to_json(JSON::State.new(:object_nl => "<br>", :indent => "&nbsp;&nbsp;", :space => "&nbsp;"))
     end
-
-    def create_new_bin!
-      bin = Bin.new
-      # TOOD: Figure out why a before :create callback won't work in the Bin model
-      # Fucking Datamapper, man.
-      url = bin.random_url
-      # Pick another if it already exists, keep trying
-      until Bin.first(:url => url).nil?
-        url = bin.random_url
-      end
-      bin.url = url
-      bin.save!
-      redirect bin.url
-    end
+      
   end
 end
