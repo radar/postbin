@@ -1,5 +1,5 @@
 <h2>Postbin #<%= @bin.url %></h2>
-<p>All POST requests to this URL are logged for you to see here, sorted newest to oldest.</p>
+<p>All POST/PATCH requests to this URL are logged for you to see here, sorted newest to oldest.</p>
 <% for item in @bin.items.reverse %>
   <div align='left'>
     #<%= item.id.to_s(36) %><br>
