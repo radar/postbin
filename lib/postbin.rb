@@ -69,6 +69,14 @@ module PostBin
     end
 
     post '/:bin_id' do
+      bin_it!
+    end
+
+    patch '/:bin_id' do
+      bin_it!
+    end
+
+    def bin_it!
       @bin = Bin.first(:url => params[:bin_id])
       params.delete("bin_id")
       @bin.items.create(:params => params.to_json)
@@ -79,6 +87,6 @@ module PostBin
     def json(v)
       JSON.parse(v).to_json(JSON::State.new(:object_nl => "<br>", :indent => "&nbsp;&nbsp;", :space => "&nbsp;"))
     end
-      
+
   end
 end
